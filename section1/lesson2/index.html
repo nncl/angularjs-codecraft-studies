@@ -1,67 +1,69 @@
-<!DOCTYPE html >
+<!DOCTYPE html>
 <html lang="en"
       ng-app="myApp">
-<head >
-	<title >Controllers</title >
+<head>
+	<title>Controllers</title>
 	<link href="../libs/bootstrap/dist/css/bootstrap.min.css"
-	      rel="stylesheet" >
+	      rel="stylesheet">
 	<link href="main.css"
-	      rel="stylesheet" >
-</head >
+	      rel="stylesheet">
+</head>
 
 <body ng-controller="MyCtrl">
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
-	<div class="container" >
-		<div class="navbar-header" >
+	<div class="container">
+		<div class="navbar-header">
 			<a class="navbar-brand"
-			   href="/" >Controllers
-			</a >
-		</div >
+			   href="/">Controllers
+			</a>
+		</div>
 		,
-	</div >
-</nav >
+	</div>
+</nav>
 
-<div class="container main-content" >
+<div class="container main-content">
 
 	<form ng-submit="submit(submitForm)"
 		  name="submitForm">
-		<div class="form-group" >
-			<label for="name" >Name</label >
+		<div class="form-group">
+			<label for="name">Name</label>
 			<input type="text"
 			       class="form-control"
 			       ng-model="formData.name"
-			       id="name" >
-		</div >
+			       id="name">
+		</div>
 
-		<div class="form-group" >
-			<label for="email" >Email</label >
+		<div class="form-group">
+			<label for="email">Email</label>
 			<input type="email"
 			       class="form-control"
 			       ng-model="formData.email"
-			       id="email" >
-		</div >
+			       id="email">
+		</div>
 
-		<div class="form-group" >
-			<label for="password" >Password</label >
+		<div class="form-group">
+			<label for="password">Password</label>
 			<input type="password"
 			       class="form-control"
 			       ng-model="formData.password"
-			       id="password" >
-		</div >
+			       id="password">
+		</div>
 
-		<div class="form-group" >
-			<button class="btn btn-primary" >Register
-			</button >
-		</div >
+		<div class="form-group">
+			<button class="btn btn-primary">Register
+			</button>
+		</div>
 
-	</form >
+	</form>
 
-</div >
+	<pre>{{ formData | json }}</pre>
 
-<script src="../libs/angular/angular.min.js" ></script >
-<script src="main.js" ></script >
+</div>
+
+<script src="../libs/angular/angular.min.js"></script>
+<script src="main.js"></script>
 
 
-</body >
-</html >
+</body>
+</html>
