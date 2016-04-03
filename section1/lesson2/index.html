@@ -1,6 +1,6 @@
 <!DOCTYPE html >
 <html lang="en"
-      ng-app >
+      ng-app="myApp">
 <head >
 	<title >Controllers</title >
 	<link href="../libs/bootstrap/dist/css/bootstrap.min.css"
@@ -9,9 +9,9 @@
 	      rel="stylesheet" >
 </head >
 
-<body >
+<body ng-controller="MyCtrl">
 
-<nav class="navbar navbar-inverse navbar-fixed-top" >
+<nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container" >
 		<div class="navbar-header" >
 			<a class="navbar-brand"
@@ -24,7 +24,8 @@
 
 <div class="container main-content" >
 
-	<form >
+	<form ng-submit="submit(submitForm)"
+		  name="submitForm">
 		<div class="form-group" >
 			<label for="name" >Name</label >
 			<input type="text"
