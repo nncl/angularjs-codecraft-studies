@@ -1,18 +1,24 @@
-<!DOCTYPE html >
-<html lang="en" >
-<head >
-	<title >Data Binding</title >
+<!DOCTYPE html>
+<html lang="en" ng-app>
+<head>
+	<title>Data Binding</title>
 	<link href="../libs/bootstrap/dist/css/bootstrap.min.css"
-	      rel="stylesheet" >
+	      rel="stylesheet">
 	<link href="main.css"
-	      rel="stylesheet" >
-</head >
+	      rel="stylesheet">
+</head>
 
-<body >
+<body>
 
-<div class="container" >
-</div >
+<div class="container" ng-init="title = 'Code'; awesome=true">
+    <h1>
+        {{title}} is Awesome: {{awesome}}
+    </h1>
 
-<script src="../libs/angular/angular.min.js" ></script >
-</body >
-</html >
+    <input type="text" ng-model="title" />
+
+</div>
+
+<script src="../libs/angular/angular.min.js"></script>
+</body>
+</html>
