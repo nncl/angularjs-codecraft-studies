@@ -4,9 +4,9 @@ var app = angular.module('minmax', [
 
 app.run(function (defaultErrorMessageResolver) {
 		defaultErrorMessageResolver.getErrorMessages().then(function (errorMessages) {
-			errorMessages['tooYoung'] = 'You must be at least {0} years old to use this site';
-			errorMessages['tooOld'] = 'You must be max {0} years old to use this site';
-			errorMessages['badUsername'] = 'Username can only contain numbers and letters and _';
+			errorMessages['tooYoung'] = 'Você precisa ter pelo menos {0} anos para usar este site';
+			errorMessages['tooOld'] = 'Você pode ter até {0} anos para usar este site';
+			errorMessages['badUsername'] = 'Nome de Usuário somente pode conter número, letras e _';
 		});
 	}
 );
