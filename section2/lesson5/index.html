@@ -33,6 +33,16 @@
 								/>
 				</div >
 
+				<div class="form-group" >
+					<select class="form-control"
+							ng-model="order">
+						<option value="name" >Name (ASC)</option >
+						<option value="-name" >Name (DEC)</option >
+						<option value="email" >Email (ASC)</option >
+						<option value="-email" >Email (DEC)</option >
+					</select >
+				</div >
+
 			</form >
 		</div >
 	</div >
@@ -45,12 +55,18 @@
 
 				<tr >
 					<th >#</th >
-					<th >Name</th >
-					<th >Email</th >
+					<th >Name
+						<span ng-click="order = 'name'" class="glyphicon glyphicon-menu-up"></span>
+						<span ng-click="order = '-name'" class="glyphicon glyphicon-menu-down"></span>
+					</th >
+					<th >Email
+						<span ng-click="order = 'email'" class="glyphicon glyphicon-menu-up"></span>
+						<span ng-click="order = '-email'" class="glyphicon glyphicon-menu-down"></span>
+					</th >
 					<th >Birthday</th >
 				</tr >
 
-				<tr ng-repeat="person in persons | filter:sensitiveSearch"
+				<tr ng-repeat="person in persons | filter:sensitiveSearch | orderBy: order"
 				    ng-style="{
 				 'background-color': $index == selectedIndex ? 'lightgray' : ''
 				 }"
