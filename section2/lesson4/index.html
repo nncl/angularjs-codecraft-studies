@@ -19,6 +19,17 @@
 
 <div class="container main-content" ng-controller="PersonsController" >
 
+	<div class="row">
+		<div class="col-md-12">
+			<form class="form-inline well well-sm">
+				<div class="form-group">
+					<input type="text" class="form-control" id="exampleInputName2" placeholder="Search for everything..."
+					ng-model="search">
+				</div>
+			</form>
+		</div>
+	</div>
+
 	<div class="row" >
 		<div class="col-md-8" >
 
@@ -31,7 +42,7 @@
 					<th >Birthday</th >
 				</tr >
 
-				<tr ng-repeat="person in persons"
+				<tr ng-repeat="person in persons | filter : sensitiveSearch"
 				    ng-style="{
 				 'background-color': $index == selectedIndex ? 'lightgray' : ''
 				 }"
@@ -71,6 +82,8 @@
 
 				</div >
 			</div >
+
+			<pre>{{search | json }}</pre>
 
 		</div >
 	</div >
