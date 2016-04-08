@@ -17,7 +17,22 @@
 	</div >
 </nav >
 
-<div class="container main-content">
+<div class="container main-content" ng-controller="PersonsController">
+	<table class="table table-bordered table-responsive">
+		<tr>
+			<td>#</td>
+			<td>Name</td>
+			<td>Email</td>
+			<td>Birthday</td>
+		</tr>
+
+		<tr ng-repeat="p in persons">
+			<td>{{ $index }}</td>
+			<td>{{p.name}}</td>
+			<td>{{p.email}}</td>
+			<td>{{p.birthdate | date : "longDate"}}</td>
+		</tr>
+	</table>
 </div >
 
 
