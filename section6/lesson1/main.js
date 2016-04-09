@@ -1,6 +1,12 @@
-var app = angular.module('codecraft', []);
+var app = angular.module('codecraft', [
+	'ngResource'
+]);
 
-
+// it is called before http services being loaded
+app.config(function ($httpProvider, $resourceProvider) {
+	$httpProvider.defaults.headers.common['Authorization'] = 'Token 8286adb00e144417ea099cc6bdc0cf2d72eae4d0';
+	$resourceProvider.defaults.stripTrailingSlashes = false;
+});
 
 app.controller('PersonDetailController', function ($scope, ContactService) {
 	$scope.contacts = ContactService;
