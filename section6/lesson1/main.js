@@ -1,12 +1,13 @@
 var app = angular.module('codecraft', [
-	'ngResource'
+	'ngResource',
+	'infinite-scroll'
 ]);
 
 // it is called before http services being loaded
 app.config(function ($httpProvider, $resourceProvider) {
 	$httpProvider.defaults.headers.common['Authorization'] = 'Token 8286adb00e144417ea099cc6bdc0cf2d72eae4d0';
 
-	// codecraft API always return the URL w/ slash at the end, so...
+	// codecraft API always returns the URL w/ slash at the end, so...
 	$resourceProvider.defaults.stripTrailingSlashes = false;
 });
 
@@ -28,12 +29,16 @@ app.controller('PersonListController', function ($scope, ContactService) {
 		return true;
 	};
 
+	$scope.loadMore = function () {
+		console.log('OOOOOOOUTRA VEISSSSS');
+	};
+
 });
 
 // FACTORIES
 app.factory('ContactFactory' , function ($resource) {
 	return $resource('https://codecraftpro.com/api/samples/v1/contact/:id/');
-})
+});
 
 app.service('ContactService', function (ContactFactory) {
 
