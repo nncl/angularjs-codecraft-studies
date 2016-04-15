@@ -30,7 +30,8 @@ app.controller('PersonListController', function ($scope, ContactService) {
 	};
 
 	$scope.loadMore = function () {
-		console.log('OOOOOOOUTRA VEISSSSS');
+		console.log('PersonListCtrl::loadMore()');
+		$scope.contacts.loadMore();
 	};
 
 });
@@ -52,11 +53,32 @@ app.service('ContactService', function (ContactFactory) {
 		'isLoading' : false,
 		'page' : 1,
 		'loadPersons' : function () {
-			ContactFactory.get(function (data) {
-				angular.forEach(data.results, function (person) {
-					self.persons.push(new ContactFactory(person));
-				})
-			});
+			if (self.hasMore & !self.isLoading) {
+				self.isLoading = true;
+
+				var params = {
+					"page" : self.page
+				};
+
+				ContactFactory.get(params, function (data) {
+					console.log(data);
+					angular.forEach(data.results, function (person) {
+						self.persons.push(new ContactFactory(person));
+					});
+
+					if(!data.next) {
+						self.hasMore = false;
+					}
+
+					self.isLoading = false;
+				});
+			}
+		},
+		'loadMore' : function () {
+			if (self.hasMore && !self.isLoading){
+				self.page += 1;
+				self.loadPersons();
+			}
 		}
 
 	};
