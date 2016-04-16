@@ -83,7 +83,7 @@
                             <td>{{ person.email }}</td>
                             <td>{{ person.birthdate | date:"longDate" }}</td>
                         </tr>
-                        <tr ng-show="contacts.persons.length == 0">
+                        <tr ng-show="contacts.persons.length == 0 && !contacts.isLoading">
                             <td colspan="4">
                                 <div class="alert alert-info">
                                     <p class="text-center">No results found for search term '{{ search }}'</p>
