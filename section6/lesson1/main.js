@@ -3,7 +3,8 @@ var app = angular.module('codecraft', [
 	'infinite-scroll',
 	'angularSpinner',
 	'jcs-autoValidate',
-	'angular-ladda'
+	'angular-ladda',
+	'mgcrea.ngStrap'
 ]);
 
 // it is called before http services being loaded
@@ -23,14 +24,31 @@ app.controller('PersonDetailController', function ($scope, ContactService) {
 
 	$scope.save = function () {
 		$scope.contacts.updateContact($scope.contacts.selectedPerson);
+	};
+
+	$scope.remove = function () {
+		$scope.contacts.removeContact($scope.contacts.selectedPerson);
 	}
 });
 
-app.controller('PersonListController', function ($scope, ContactService) {
+app.controller('PersonListController', function ($scope, $modal, ContactService) {
 
 	$scope.search = "";
 	$scope.order = "email";
 	$scope.contacts = ContactService;
+
+	$scope.openModal = function () {
+		$scope.contacts.selectedPerson = {};
+		$scope.createModal = $modal({
+			scope : $scope,
+			template : 'templates/modal.html',
+			show : true
+		});
+	};
+
+	$scope.createContact = function () {
+		$scope.contacts.createContact($scope.contacts.selectedPerson);
+	};
 
 	$scope.$watch('search', function (newVal, oldVal) {
 		if(angular.isDefined(newVal)){
@@ -129,6 +147,21 @@ app.service('ContactService', function (ContactFactory) {
             person.$update().then(function () {
                 self.isSaving = false;
             });
+		},
+		'removeContact' : function (person) {
+            self.isDeleting = true;
+            person.$remove().then(function () {
+                self.isDeleting = false;
+				var index = self.persons.indexOf(person);
+				self.persons.splice(index, 1);
+				self.selectedPerson = null;
+            });
+		},
+		'createContact' : function (person) {
+			self.isSaving = true;
+			ContactFactory.save(person).$promise.then(function () {
+				self.isSaving = false;
+			});
 		}
 
 	};
