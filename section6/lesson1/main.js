@@ -47,7 +47,10 @@ app.controller('PersonListController', function ($scope, $modal, ContactService)
 	};
 
 	$scope.createContact = function () {
-		$scope.contacts.createContact($scope.contacts.selectedPerson);
+		$scope.contacts.createContact($scope.contacts.selectedPerson)
+			.then(function () {
+				$scope.createModal.hide();
+			});
 	};
 
 	$scope.$watch('search', function (newVal, oldVal) {
@@ -79,7 +82,7 @@ app.factory('ContactFactory' , function ($resource) {
     });
 });
 
-app.service('ContactService', function (ContactFactory) {
+app.service('ContactService', function ($q, ContactFactory) {
 
 	var self = {
 		'addPerson': function (person) {
@@ -158,10 +161,24 @@ app.service('ContactService', function (ContactFactory) {
             });
 		},
 		'createContact' : function (person) {
+			var d = $q.defer();
+
 			self.isSaving = true;
 			ContactFactory.save(person).$promise.then(function () {
 				self.isSaving = false;
+				self.reset();
+
+				d.resolve();
 			});
+
+			return d.promise;
+		},
+		'reset' : function () {
+			self.hasMore = true;
+			self.page = 1;
+			self.persons = [];
+			self.selectedPerson = null;
+			self.loadPersons();
 		}
 
 	};
