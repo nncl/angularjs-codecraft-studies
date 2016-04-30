@@ -7,6 +7,10 @@
           rel="stylesheet">
     <link href="../libs/ladda/dist/ladda-themeless.min.css"
           rel="stylesheet">
+    <link href="../libs/angularjs-toaster/toaster.min.css"
+          rel="stylesheet">
+    <link href="../libs/font-awesome/css/font-awesome.min.css"
+          rel="stylesheet">
     <link href="main.css"
           rel="stylesheet">
 </head>
@@ -24,12 +28,14 @@
 
 <div class="container main-content">
 
+    <toaster-container></toaster-container>
+
     <div class="row">
         <div class="col-md-8" ng-controller="PersonListController">
             <div class="row">
                 <div class="col-md-12">
                     <form class="form-inline well well-sm">
-                        <span class="glyphicon glyphicon-search"></span>
+                        <span class="fa fa-search"></span>
 
                         <div class="form-group">
                             <input type="text"
@@ -40,7 +46,7 @@
                             />
                         </div>
 
-                        <span class="glyphicon glyphicon-sort-by-attributes"></span>
+                        <span class="fa fa-sort"></span>
 
                         <div class="form-group">
                             <select class="form-control"
@@ -65,19 +71,25 @@
 
                         <tr>
                             <th>#</th>
-                            <th>Name
-								<span ng-click="order = 'name'"
-                                      class="glyphicon glyphicon-menu-up"></span>
-								<span ng-click="order = '-name'"
-                                      class="glyphicon glyphicon-menu-down"></span>
+                            <th>
+                                <div class="sortables">
+                                    <span ng-click="order = 'name'"
+                                          class="fa fa-sort-asc"></span>
+								    <span ng-click="order = '-name'"
+                                      class="fa fa-sort-desc"></span>
+                                </div>
+                                Name
                             </th>
-                            <th>Email
-								<span ng-click="order = 'email'"
-                                      class="glyphicon glyphicon-menu-up"></span>
-								<span ng-click="order = '-email'"
-                                      class="glyphicon glyphicon-menu-down"></span>
+                            <th>
+								<div class="sortables">
+                                    <span ng-click="order = 'email'"
+                                          class="fa fa-sort-asc"></span>
+								    <span ng-click="order = '-email'"
+                                          class="fa fa-sort-desc"></span>
+                                </div>
+                                Email
                             </th>
-                            <th>Birthday</th>
+                            <th>Phone</th>
                         </tr>
 
                         <tr ng-repeat="person in contacts.persons"
@@ -85,10 +97,14 @@
 							 'background-color': person.email == contacts.selectedPerson.email ? 'lightgray' : ''
 						}"
                             ng-click="contacts.selectedPerson = person">
-                            <td>{{ $index }}</td>
+                            <td>
+                                <img ng-src="{{person.photo}}"
+                                     class="img-circle profile-photo"
+                                     alt="">
+                            </td>
                             <td>{{ person.name }}</td>
                             <td>{{ person.email }}</td>
-                            <td>{{ person.birthdate | date:"longDate" }}</td>
+                            <td>{{ person.phonenumber}}</td>
                         </tr>
                         <tr ng-show="contacts.persons.length == 0 && !contacts.isLoading">
                             <td colspan="4">
@@ -121,7 +137,7 @@
                     <button class="btn btn-danger btn-sm pull-right"
                             ladda="contacts.isDeleting"
                             ng-click="remove()">
-                                Delete
+                        Delete
                     </button>
 
                     <div class="clearfix"></div>
@@ -155,6 +171,8 @@
 <script src="../libs/angular-spinner/angular-spinner.min.js"></script>
 <script src="../libs/angular-strap/dist/angular-strap.min.js"></script>
 <script src="../libs/angular-strap/dist/angular-strap.tpl.min.js"></script>
+<script src="../libs/angular-animate/angular-animate.min.js"></script>
+<script src="../libs/angularjs-toaster/toaster.min.js"></script>
 <script src="main.js"></script>
 </body>
 </html>

@@ -4,11 +4,13 @@ var app = angular.module('codecraft', [
 	'angularSpinner',
 	'jcs-autoValidate',
 	'angular-ladda',
-	'mgcrea.ngStrap'
+	'mgcrea.ngStrap',
+	'toaster',
+	'ngAnimate'
 ]);
 
 // it is called before http services being loaded
-app.config(function ($httpProvider, $resourceProvider, laddaProvider) {
+app.config(function ($httpProvider, $resourceProvider, $datepickerProvider, laddaProvider) {
 	$httpProvider.defaults.headers.common['Authorization'] = 'Token 8286adb00e144417ea099cc6bdc0cf2d72eae4d0';
 
 	// codecraft API always returns the URL w/ slash at the end, so...
@@ -17,6 +19,11 @@ app.config(function ($httpProvider, $resourceProvider, laddaProvider) {
 	laddaProvider.setOption({
 		style : 'expand-right'
 	});
+
+	angular.extend($datepickerProvider.defaults, {
+		dateFormat : 'd/M/yyyy',
+		autoclose : true
+	})
 });
 
 app.controller('PersonDetailController', function ($scope, ContactService) {
@@ -82,7 +89,7 @@ app.factory('ContactFactory' , function ($resource) {
     });
 });
 
-app.service('ContactService', function ($q, ContactFactory) {
+app.service('ContactService', function ($q, ContactFactory, toaster) {
 
 	var self = {
 		'addPerson': function (person) {
@@ -149,6 +156,7 @@ app.service('ContactService', function ($q, ContactFactory) {
             // });
             person.$update().then(function () {
                 self.isSaving = false;
+				toaster.pop('success', 'Updated ' + person.name);
             });
 		},
 		'removeContact' : function (person) {
@@ -158,6 +166,7 @@ app.service('ContactService', function ($q, ContactFactory) {
 				var index = self.persons.indexOf(person);
 				self.persons.splice(index, 1);
 				self.selectedPerson = null;
+				toaster.pop('success', 'Deleted ' + person.name);
             });
 		},
 		'createContact' : function (person) {
@@ -167,6 +176,7 @@ app.service('ContactService', function ($q, ContactFactory) {
 			ContactFactory.save(person).$promise.then(function () {
 				self.isSaving = false;
 				self.reset();
+				toaster.pop('success', 'Created ' + person.name);
 
 				d.resolve();
 			});
