@@ -6,7 +6,8 @@ var app = angular.module('codecraft', [
 	'angular-ladda',
 	'mgcrea.ngStrap',
 	'toaster',
-	'ngAnimate'
+	'ngAnimate',
+	'ui.router'
 ]);
 
 app.config(function ($httpProvider, $resourceProvider, laddaProvider, $datepickerProvider) {
@@ -19,6 +20,17 @@ app.config(function ($httpProvider, $resourceProvider, laddaProvider, $datepicke
 		dateFormat: 'd/M/yyyy',
 		autoclose: true
 	});
+});
+
+app.config(function ($stateProvider, $urlRouterProvider) {
+	$stateProvider
+		.state('list', {
+			url : '/',
+			templateUrl : 'templates/list.html'
+		})
+	;
+
+	$urlRouterProvider.otherwise('/');
 });
 
 app.filter('defaultImage', function () {
