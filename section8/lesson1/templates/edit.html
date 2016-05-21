@@ -8,22 +8,17 @@
 				{{mode}}
 
 				<div class="pull-right" >
-					<!--<button class="btn btn-primary btn-sm"-->
-					        <!--ladda="contacts.isSaving"-->
-					        <!--type="submit" >-->
-						<!--<span ng-if="mode == 'Edit'" >Save</span >-->
-						<!--<span ng-if="mode == 'Create'" >Create</span >-->
-					<!--</button >-->
+					<button class="btn btn-primary btn-sm"
+					        ladda="contacts.isSaving"
+					        type="submit" >
+						<span ng-if="mode == 'Edit'" >Save</span >
+						<span ng-if="mode == 'Create'" >Create</span >
+					</button >
 
-					<!--<button class="btn btn-danger btn-sm"-->
-					        <!--ladda="contacts.isDeleting"-->
-					        <!--ng-if="mode == 'Edit'"-->
-					        <!--ng-click="remove()" >Delete-->
-					<!--</button >-->
-
-					<button class="btn btn-danger btn-sm pull-right"
-							ladda="contacts.isDeleting"
-							ng-click="remove()" >Delete
+					<button class="btn btn-danger btn-sm"
+					        ladda="contacts.isDeleting"
+					        ng-if="mode == 'Edit'"
+					        ng-click="remove()" >Delete
 					</button >
 				</div >
 				<div class="clearfix" ></div >
