@@ -1,97 +1,93 @@
-<div class="col-md-12"
-     ng-controller="PersonListController">
-    <div class="row">
-        <div class="col-md-12">
-            <form class="form-inline well well-sm">
-                <span class="fa fa-search"></span>
+<div class="col-md-12">
 
-                <div class="form-group">
-                    <input type="text"
-                           class="form-control"
-                           id="name"
-                           ng-model="search"
-                           placeholder="Search name..."
-                    />
-                </div>
+    <form class="form-inline well well-sm">
+        <span class="fa fa-search"></span>
 
-                <span class="fa fa-sort"></span>
+        <div class="form-group">
+            <input type="text"
+                   class="form-control"
+                   id="name"
+                   ng-model="search"
+                   placeholder="Search name..."
+            />
+        </div>
 
-                <div class="form-group">
-                    <select class="form-control"
-                            ng-model="order">
-                        <option value="name">Name (ASC)</option>
-                        <option value="-name">Name (DEC)</option>
-                        <option value="email">Email (ASC)</option>
-                        <option value="-email">Email (DEC)</option>
-                    </select>
-                </div>
+        <span class="fa fa-sort"></span>
 
-                <button class="btn btn-primary pull-right"
-                        ng-click="showCreateModal()">Create
-                </button>
+        <div class="form-group">
+            <select class="form-control"
+                    ng-model="order">
+                <option value="name">Name (ASC)</option>
+                <option value="-name">Name (DEC)</option>
+                <option value="email">Email (ASC)</option>
+                <option value="-email">Email (DEC)</option>
+            </select>
+        </div>
 
-            </form>
+        <button class="btn btn-primary pull-right"
+                ng-click="showCreateModal()">Create
+        </button>
 
-            <table class="table table-bordered"
-                   infinite-scroll="loadMore()"
-                   infinite-scroll-immediate-check="false"
-                   infinite-scroll-distance="1">
+    </form>
 
-                <tr>
-                    <th class="col-1">#</th>
-                    <th class="col-2">
-                        <div class="sortables">
+    <table class="table table-bordered"
+           infinite-scroll="loadMore()"
+           infinite-scroll-immediate-check="false"
+           infinite-scroll-distance="1">
+
+        <tr>
+            <th class="col-1">#</th>
+            <th class="col-2">
+                <div class="sortables">
 									<span ng-click="order = 'name'"
                                           class="fa fa-sort-asc"></span>
 									<span ng-click="order = '-name'"
                                           class="fa fa-sort-desc"></span>
-                        </div>
-                        Name
-                    </th>
-                    <th class="col-3">
-                        <div class="sortables">
+                </div>
+                Name
+            </th>
+            <th class="col-3">
+                <div class="sortables">
 									<span ng-click="order = 'email'"
                                           class="fa fa-sort-asc"></span>
 									<span ng-click="order = '-email'"
                                           class="fa fa-sort-desc"></span>
-                        </div>
-                        Email
-                    </th>
-                    <th class="col-4">Phone</th>
-                </tr>
+                </div>
+                Email
+            </th>
+            <th class="col-4">Phone</th>
+        </tr>
 
-                <tr ng-repeat="person in contacts.persons"
-                    ng-style="{
+        <tr ng-repeat="person in contacts.persons"
+            ng-style="{
 							 'background-color': person.email == contacts.selectedPerson.email ? 'lightgray' : ''
 						}"
-                    ng-click="contacts.selectedPerson = person">
-                    <td>
-                        <img ng-src="{{person.photo|defaultImage:'./avatar.png'}}"
-                             class="img-circle profile-photo"
-                             alt=""/>
-                    </td>
-                    <td>{{ person.name }}</td>
-                    <td>{{ person.email }}</td>
-                    <td>{{ person.phonenumber }}</td>
-                </tr>
+            ui-sref="edit({email:person.email})"
+        >
+            <td>
+                <img ng-src="{{person.photo|defaultImage:'./avatar.png'}}"
+                     class="img-circle profile-photo"
+                     alt=""/>
+            </td>
+            <td>{{ person.name }}</td>
+            <td>{{ person.email }}</td>
+            <td>{{ person.phonenumber }}</td>
+        </tr>
 
 
-            </table>
+    </table>
 
-            <div ng-show="contacts.persons.length == 0 && !contacts.isLoading">
-                <div class="alert alert-info">
-                    <p class="text-center">No results found for search term '{{ search }}'</p>
-                </div>
-            </div>
-
-            <div class="spinner"
-                 ng-show="contacts.isLoading">
-                <span us-spinner="{radius:8, width:5, length: 3, lines:9}"></span>
-
-                <p>Loading...</p>
-            </div>
-
+    <div ng-show="contacts.persons.length == 0 && !contacts.isLoading">
+        <div class="alert alert-info">
+            <p class="text-center">No results found for search term '{{ search }}'</p>
         </div>
+    </div>
+
+    <div class="spinner"
+         ng-show="contacts.isLoading">
+        <span us-spinner="{radius:8, width:5, length: 3, lines:9}"></span>
+
+        <p>Loading...</p>
     </div>
 
 </div>

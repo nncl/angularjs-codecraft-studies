@@ -26,7 +26,13 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 	$stateProvider
 		.state('list', {
 			url : '/',
-			templateUrl : 'templates/list.html'
+			templateUrl : 'templates/list.html',
+			controller : 'PersonListController'
+		})
+		.state('edit', {
+			url : '/edit/:email',
+			templateUrl : 'templates/edit.html',
+			controller : 'PersonDetailController'
 		})
 	;
 
@@ -56,16 +62,23 @@ app.factory("Contact", function ($resource) {
 	});
 });
 
-app.controller('PersonDetailController', function ($scope, ContactService) {
-	$scope.contacts = ContactService;
+app.controller('PersonDetailController', function ($scope, $stateParams, $state, ContactService) {
 
+	var email = $stateParams.email;
+
+	$scope.contacts = ContactService;
+	$scope.contacts.selectedPerson = $scope.contacts.getPerson(email);
 
 	$scope.save = function () {
-		$scope.contacts.updateContact($scope.contacts.selectedPerson)
+		$scope.contacts.updateContact($scope.contacts.selectedPerson).then(function () {
+			$state.go('list');
+		});
 	};
 
 	$scope.remove = function () {
-		$scope.contacts.removeContact($scope.contacts.selectedPerson)
+		$scope.contacts.removeContact($scope.contacts.selectedPerson).then(function () {
+			$state.go('list');
+		});
 	}
 });
 
@@ -115,9 +128,6 @@ app.service('ContactService', function (Contact, $q, toaster) {
 
 
 	var self = {
-		'addPerson': function (person) {
-			this.persons.push(person);
-		},
 		'page': 1,
 		'hasMore': true,
 		'isLoading': false,
@@ -125,6 +135,15 @@ app.service('ContactService', function (Contact, $q, toaster) {
 		'selectedPerson': null,
 		'persons': [],
 		'search': null,
+		'getPerson' : function (email) {
+			for ( var i = 0; i < self.persons.length; i++ ) {
+				var obj = self.persons[i];
+
+				if(obj.email == email) {
+					return obj;
+				}
+			}
+		},
 		'doSearch': function (search) {
 			self.hasMore = true;
 			self.page = 1;
@@ -170,14 +189,17 @@ app.service('ContactService', function (Contact, $q, toaster) {
 			}
 		},
 		'updateContact': function (person) {
-			console.log("Service Called Update");
+			var d = $q.defer();
 			self.isSaving = true;
 			person.$update().then(function () {
 				self.isSaving = false;
 				toaster.pop('success', 'Updated ' + person.name);
+				d.resolve();
 			});
+			return d.promise;
 		},
 		'removeContact': function (person) {
+			var d = $q.defer();
 			self.isDeleting = true;
 			person.$remove().then(function () {
 				self.isDeleting = false;
@@ -185,7 +207,9 @@ app.service('ContactService', function (Contact, $q, toaster) {
 				self.persons.splice(index, 1);
 				self.selectedPerson = null;
 				toaster.pop('success', 'Deleted ' + person.name);
+				d.resolve();
 			});
+			return d.promise;
 		},
 		'createContact': function (person) {
 			var d = $q.defer();
