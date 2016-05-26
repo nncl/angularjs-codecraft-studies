@@ -59,6 +59,12 @@ app.config(function ($httpProvider, $resourceProvider, laddaProvider, $datepicke
 	});
 });
 
+app.directive('ccSpinner', function () {
+	return {
+		'templateUrl' : 'templates/spinner.html'
+	}
+});
+
 app.filter('defaultImage', function () {
 	return function (input, param) {
 		if (!input) {
