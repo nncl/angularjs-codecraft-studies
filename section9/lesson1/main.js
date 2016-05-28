@@ -59,8 +59,10 @@ app.config(function ($httpProvider, $resourceProvider, laddaProvider, $datepicke
 	});
 });
 
+// AEC: Attribute, Element and Class
 app.directive('ccSpinner', function () {
 	return {
+		'restrict' : 'AEC',
 		'templateUrl' : 'templates/spinner.html'
 	}
 });
