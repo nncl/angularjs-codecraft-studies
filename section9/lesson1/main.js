@@ -62,6 +62,7 @@ app.config(function ($httpProvider, $resourceProvider, laddaProvider, $datepicke
 // AEC: Attribute, Element and Class
 app.directive('ccSpinner', function () {
 	return {
+		'transclude' : true,
 		'restrict' : 'AEC',
 		'templateUrl' : 'templates/spinner.html'
 	}
