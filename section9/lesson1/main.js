@@ -59,7 +59,13 @@ app.config(function ($httpProvider, $resourceProvider, laddaProvider, $datepicke
 	});
 });
 
-// AEC: Attribute, Element and Class
+/*
+  * AEC means I can use my directive as:
+  * Attribute
+  * Element
+  * Class
+ */
+
 app.directive('ccSpinner', function () {
 	return {
 		'transclude' : true,
